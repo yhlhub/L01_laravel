@@ -20,6 +20,10 @@ class UserAddressesController extends Controller
 
     public function store(UserAddressRequest $request)
     {
+        //$request->user() 获取当前登录用户
+        //user()->addresses() 获取当前用户与地址的关联关系（注意：这里并不是获取当前用户的地址列表）
+        //addresses()->create() 在关联关系里创建一个新的记录
+        //$request->only() 通过白名单的方式从用户提交的数据里获取我们所需要的数据
         $request->user()->addresses()->create($request->only([
             'province',
             'city',
@@ -36,7 +40,6 @@ class UserAddressesController extends Controller
     public function edit(UserAddress $user_address)
     {
         $this->authorize('own', $user_address);
-
         return view('user_addresses.create_and_edit', ['address' => $user_address]);
     }
 
